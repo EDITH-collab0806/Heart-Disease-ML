@@ -1,113 +1,81 @@
-a) Problem Statement
+# Heart Disease Prediction – End-to-End Machine Learning Project
 
-Heart disease is one of the leading causes of death worldwide. Early prediction using machine learning can help doctors identify high-risk patients and take preventive action.
+This project builds multiple Machine Learning classification models to predict the presence of heart disease using clinical patient data.  
+It includes preprocessing, model training, evaluation, comparison, and deployment using Streamlit.
 
-The goal of this project is to build and compare multiple machine learning classification models to predict whether a patient has heart disease based on clinical parameters. The models are evaluated using standard performance metrics and deployed using a Streamlit web application.
+---
 
-b) Dataset Description
+## 🚀 Project Workflow
 
-Dataset Name: Heart Disease Dataset
+1. Data Collection (Heart Disease Dataset)
+2. Data Preprocessing
+3. Feature Engineering
+4. Model Training
+5. Model Evaluation
+6. Model Comparison
+7. Deployment using Streamlit
 
-Source: UCI / Kaggle public repository
+---
 
-Type: Binary Classification
+## 🤖 Machine Learning Models Used
 
-Number of Features: 13
+- Logistic Regression  
+- Decision Tree Classifier  
+- K-Nearest Neighbor (KNN)  
+- Naive Bayes  
+- Random Forest  
+- XGBoost  
 
-Number of Instances: 500+
+---
 
-Target Variable: Presence of Heart Disease (1 = Disease, 0 = No Disease)
+## 📊 Model Performance Comparison
 
-Features Used
+| ML Model Name        | Accuracy | AUC     | Precision | Recall  | F1 Score | MCC     |
+|----------------------|----------|---------|-----------|---------|----------|---------|
+| Logistic Regression  | 0.809756 | 0.929810| 0.761905  | 0.914286| 0.831169 | 0.630908|
+| Decision Tree        | 0.985366 | 0.985714| 1.000000  | 0.971429| 0.985507 | 0.971151|
+| KNN                  | 0.863415 | 0.962905| 0.873786  | 0.857143| 0.865385 | 0.726935|
+| Naive Bayes          | 0.829268 | 0.904286| 0.807018  | 0.876190| 0.840183 | 0.660163|
+| Random Forest        | 1.000000 | 1.000000| 1.000000  | 1.000000| 1.000000 | 1.000000|
+| XGBoost              | 1.000000 | 1.000000| 1.000000  | 1.000000| 1.000000 | 1.000000|
 
-Age
+---
 
-Sex
+## 📈 Observations on Model Performance
 
-Chest pain type (cp)
+| ML Model Name        | Observation |
+|----------------------|-------------|
+| Logistic Regression  | Performs well for linear relationships; good recall with moderate accuracy. |
+| Decision Tree        | Very high accuracy and precision; may overfit training data. |
+| KNN                  | Balanced performance; sensitive to K value and feature scaling. |
+| Naive Bayes          | Fast and simple; moderate performance due to independence assumption. |
+| Random Forest        | Strong performance with reduced overfitting; highly reliable. |
+| XGBoost              | Best performing model with excellent prediction capability. |
 
-Resting blood pressure (trestbps)
+---
 
-Cholesterol (chol)
+## 📊 Evaluation Metrics Used
 
-Fasting blood sugar (fbs)
+- Accuracy  
+- Precision  
+- Recall  
+- F1 Score  
+- AUC Score  
+- Matthews Correlation Coefficient (MCC)  
+- Confusion Matrix  
+- Classification Report  
 
-Rest ECG (restecg)
+---
 
-Max heart rate (thalach)
+## 🖥️ Streamlit App Features
 
-Exercise induced angina (exang)
+- Select ML model  
+- View model accuracy & evaluation metrics  
+- Display confusion matrix  
+- Display classification report  
+- Predict heart disease risk for new patient data  
 
-Oldpeak
+---
 
-Slope
+## 📂 Project Structure
 
-Number of major vessels (ca)
-
-Thal
-
-c) Models Used and Evaluation Metrics
-
-The following machine learning models were implemented and evaluated on the same dataset:
-
-Logistic Regression
-
-Decision Tree Classifier
-
-K-Nearest Neighbor (KNN)
-
-Naive Bayes
-
-Random Forest (Ensemble)
-
-XGBoost (Ensemble)
-
-Evaluation Metrics Used
-
-Accuracy
-
-AUC Score
-
-Precision
-
-Recall
-
-F1 Score
-
-Matthews Correlation Coefficient (MCC)
-
-                 Model  Accuracy       AUC  Precision    Recall  F1 Score  \
-0  Logistic Regression  0.809756  0.929810   0.761905  0.914286  0.831169   
-1        Decision Tree  0.985366  0.985714   1.000000  0.971429  0.985507   
-2                  KNN  0.863415  0.962905   0.873786  0.857143  0.865385   
-3          Naive Bayes  0.829268  0.904286   0.807018  0.876190  0.840183   
-4        Random Forest  1.000000  1.000000   1.000000  1.000000  1.000000   
-5              XGBoost  1.000000  1.000000   1.000000  1.000000  1.000000   
-
-        MCC  
-0  0.630908  
-1  0.971151  
-2  0.726935  
-3  0.660163  
-4  1.000000  
-5  1.000000 
-
-Observations on Model Performance
-ML Model Name	Observation about model performance
-Logistic Regression	Performs well for linear relationships and gives good recall but slightly lower accuracy.
-Decision Tree	Very high accuracy and precision; may overfit on training data.
-KNN	Balanced performance with good recall and precision but sensitive to k value.
-Naive Bayes	Fast and simple; performs moderately well but assumes feature independence.
-Random Forest	Best overall performance due to ensemble learning and reduced overfitting.
-XGBoost	Achieved highest performance; handles complex patterns and interactions effectively.
-Streamlit Web Application Features
-
-Dataset upload option (CSV test data)
-
-Model selection dropdown
-
-Evaluation metrics display
-
-Confusion matrix / classification report
-
-Real-time heart disease prediction interface
