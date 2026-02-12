@@ -1,100 +1,105 @@
-# Heart Disease Prediction using Machine Learning
+a) Problem Statement
 
-## a. Problem Statement
-Heart disease is one of the leading causes of death worldwide. Early prediction can help healthcare professionals take preventive measures and provide timely treatment.  
-The objective of this project is to build and compare multiple machine learning models to predict the presence of heart disease using patient health parameters.
+Heart disease is one of the leading causes of death worldwide. Early prediction using machine learning can help doctors identify high-risk patients and take preventive action.
 
----
+The goal of this project is to build and compare multiple machine learning classification models to predict whether a patient has heart disease based on clinical parameters. The models are evaluated using standard performance metrics and deployed using a Streamlit web application.
 
-## b. Dataset Description
-The dataset used is the Heart Disease dataset which contains various medical attributes of patients used for predicting heart disease.
+b) Dataset Description
 
-### Features:
-- Age
-- Sex
-- Chest pain type (cp)
-- Resting blood pressure (trestbps)
-- Cholesterol (chol)
-- Fasting blood sugar (fbs)
-- Resting ECG (restecg)
-- Maximum heart rate achieved (thalach)
-- Exercise induced angina (exang)
-- Oldpeak
-- Slope
-- Number of major vessels (ca)
-- Thal
+Dataset Name: Heart Disease Dataset
 
-### Target Variable:
-- 0 → No heart disease
-- 1 → Presence of heart disease
+Source: UCI / Kaggle public repository
 
----
+Type: Binary Classification
 
-## c. Models Used
+Number of Features: 13
 
-The following machine learning models were implemented and evaluated:
+Number of Instances: 500+
 
-- Logistic Regression  
-- Decision Tree Classifier  
-- k-Nearest Neighbor (kNN)  
-- Naive Bayes  
-- Random Forest (Ensemble Model)  
-- XGBoost (Ensemble Model)  
+Target Variable: Presence of Heart Disease (1 = Disease, 0 = No Disease)
 
----
+Features Used
 
-## Model Comparison Table
+Age
 
-| ML Model Name | Accuracy | AUC | Precision | Recall | F1 Score | MCC |
-|--------------|----------|-----|-----------|--------|----------|-----|
-| Logistic Regression |      |      |      |      |      |      |
-| Decision Tree |      |      |      |      |      |      |
-| kNN |      |      |      |      |      |      |
-| Naive Bayes |      |      |      |      |      |      |
-| Random Forest (Ensemble) |      |      |      |      |      |      |
-| XGBoost (Ensemble) |      |      |      |      |      |      |
+Sex
 
-*(Fill the above values from your model evaluation results.)*
+Chest pain type (cp)
 
----
+Resting blood pressure (trestbps)
 
-## Observations on Model Performance
+Cholesterol (chol)
 
-| ML Model Name | Observation about model performance |
-|--------------|-------------------------------------|
-| Logistic Regression | Performs well for linear relationships and provides interpretable results. |
-| Decision Tree | Easy to interpret but may overfit the training data. |
-| kNN | Performance depends on the choice of K and scaling of features. |
-| Naive Bayes | Fast and efficient but assumes feature independence. |
-| Random Forest (Ensemble) | Reduces overfitting and improves accuracy using multiple trees. |
-| XGBoost (Ensemble) | Provides best performance by capturing complex patterns and interactions. |
+Fasting blood sugar (fbs)
 
----
+Rest ECG (restecg)
 
-## Project Workflow
+Max heart rate (thalach)
 
-1. Data Collection
-2. Data Preprocessing
-3. Exploratory Data Analysis
-4. Model Training
-5. Model Evaluation using:
-   - Accuracy
-   - AUC
-   - Precision
-   - Recall
-   - F1 Score
-   - MCC
-6. Model Comparison
-7. Deployment using Streamlit
+Exercise induced angina (exang)
 
----
+Oldpeak
 
-## Tools & Technologies Used
+Slope
 
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- XGBoost
-- Streamlit
-- Matplotlib / Seaborn
+Number of major vessels (ca)
+
+Thal
+
+c) Models Used and Evaluation Metrics
+
+The following machine learning models were implemented and evaluated on the same dataset:
+
+Logistic Regression
+
+Decision Tree Classifier
+
+K-Nearest Neighbor (KNN)
+
+Naive Bayes
+
+Random Forest (Ensemble)
+
+XGBoost (Ensemble)
+
+Evaluation Metrics Used
+
+Accuracy
+
+AUC Score
+
+Precision
+
+Recall
+
+F1 Score
+
+Matthews Correlation Coefficient (MCC)
+
+Model Performance Comparison Table
+ML Model Name	Accuracy	AUC	Precision	Recall	F1 Score	MCC
+Logistic Regression	0.8098	0.9298	0.7619	0.9143	0.8312	0.63
+Decision Tree	0.9854	0.9857	1.00	0.9714	0.9855	0.9711
+KNN	0.8634	0.9629	0.8738	0.8571	0.8654	0.7269
+Naive Bayes	0.8293	0.9043	0.8070	0.8762	0.8402	0.6602
+Random Forest	1.00	1.00	1.00	1.00	1.00	1.00
+XGBoost	1.00	1.00	1.00	1.00	1.00	1.00
+Observations on Model Performance
+ML Model Name	Observation about model performance
+Logistic Regression	Performs well for linear relationships and gives good recall but slightly lower accuracy.
+Decision Tree	Very high accuracy and precision; may overfit on training data.
+KNN	Balanced performance with good recall and precision but sensitive to k value.
+Naive Bayes	Fast and simple; performs moderately well but assumes feature independence.
+Random Forest	Best overall performance due to ensemble learning and reduced overfitting.
+XGBoost	Achieved highest performance; handles complex patterns and interactions effectively.
+Streamlit Web Application Features
+
+Dataset upload option (CSV test data)
+
+Model selection dropdown
+
+Evaluation metrics display
+
+Confusion matrix / classification report
+
+Real-time heart disease prediction interface
