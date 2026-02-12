@@ -108,23 +108,7 @@ if uploaded_file:
             st.subheader("📊 Evaluation Metrics Table")
             st.dataframe(metrics_df, use_container_width=True)
 
-            # -------------------------------
-            # Confusion Matrix Heatmap
-            # -------------------------------
-            st.subheader("📉 Confusion Matrix")
-
-            fig, ax = plt.subplots()
-            sns.heatmap(cm, annot=True, fmt='d', cmap="Blues", ax=ax)
-            st.pyplot(fig)
-
-            # -------------------------------
-            # Classification Report table
-            # -------------------------------
-            report_dict = classification_report(y, predictions, output_dict=True)
-            report_df = pd.DataFrame(report_dict).transpose()
-
-            st.subheader("📄 Classification Report Table")
-            st.dataframe(report_df, use_container_width=True)
+           
 
         # -------------------------------
         # Prediction section
