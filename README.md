@@ -41,16 +41,26 @@ It includes preprocessing, model training, evaluation, comparison, and deploymen
 
 ---
 
-## 📈 Observations on Model Performance
+## 📈 Detailed Observations on Model Performance
 
-| ML Model Name        | Observation |
-|----------------------|-------------|
-| Logistic Regression  | Performs well for linear relationships; good recall with moderate accuracy. |
-| Decision Tree        | Very high accuracy and precision; may overfit training data. |
-| KNN                  | Balanced performance; sensitive to K value and feature scaling. |
-| Naive Bayes          | Fast and simple; moderate performance due to independence assumption. |
-| Random Forest        | Strong performance with reduced overfitting; highly reliable. |
-| XGBoost              | Best performing model with excellent prediction capability. |
+| ML Model Name | Observation |
+|--------------|-------------|
+| Logistic Regression | Works well when the relationship between features and target is linear. Shows strong recall, meaning it identifies most heart disease cases correctly. However, accuracy is slightly lower compared to ensemble models and it may struggle with complex non-linear patterns. |
+| Decision Tree | Achieves very high accuracy and precision by learning decision rules from data. Easy to interpret and visualize. However, it is prone to overfitting and may not generalize well to unseen data if tree depth is not controlled. |
+| KNN | Provides balanced performance across accuracy, precision, and recall. Works well for datasets with clear class boundaries. Performance is highly dependent on the choice of K and feature scaling; computational cost increases with larger datasets. |
+| Naive Bayes | Fast and efficient model with low computational cost. Performs reasonably well even with limited data. However, its assumption of feature independence reduces performance when features are correlated, which is common in medical datasets. |
+| Random Forest | One of the most reliable models due to ensemble learning. Reduces overfitting by combining multiple decision trees. Handles non-linear relationships and feature interactions effectively. Provides stable and highly accurate predictions across different datasets. |
+| XGBoost | Best performing model in this project with perfect scores across most metrics. Uses boosting to iteratively correct previous errors. Handles missing values and complex feature interactions well. Requires tuning but delivers superior predictive power and generalization. |
+
+### 📊 Overall Insights
+
+- Ensemble models (Random Forest, XGBoost) outperform single models.
+- Logistic Regression is useful as a baseline and for interpretability.
+- Decision Tree is highly accurate but must be regularized to avoid overfitting.
+- KNN performance depends heavily on hyperparameter tuning.
+- Naive Bayes is suitable for quick predictions and smaller datasets.
+- XGBoost provides the most robust and production-ready performance for heart disease prediction.
+
 
 ---
 
