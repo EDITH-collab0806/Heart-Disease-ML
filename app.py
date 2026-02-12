@@ -1,115 +1,97 @@
 import streamlit as st
 import pandas as pd
 import joblib
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
+from sklearn.metrics import accuracy_score, confusion_matrix
 
-st.title("Heart Disease Prediction Web App")
-
-st.write("Upload test dataset OR enter patient details manually")
-
-# Load trained models
-dt_model = joblib.load("model/decision_tree_model.pkl")
-knn_model = joblib.load("model/knn_model.pkl")
-nb_model = joblib.load("model/naive_bayes_model.pkl")
-rf_model = joblib.load("model/random_forest_model.pkl")
-xgb_model = joblib.load("model/xgboost_model.pkl")
-
-models = {
-    "Decision Tree": dt_model,
-    "KNN": knn_model,
-    "Naive Bayes": nb_model,
-    "Random Forest": rf_model,
-    "XGBoost": xgb_model
-}
+st.title("❤️ Heart Disease Prediction ML App")
 
 # -------------------------------
-# (a) DATASET UPLOAD OPTION
+# Load trained models (.pkl files)
 # -------------------------------
-st.header("Upload Test Dataset (CSV)")
-uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
+try:
+    lr_model = joblib.load("model/logistic_regression_model.pkl")
+    dt_model = joblib.load("model/decision_tree_model.pkl")
+    knn_model = joblib.load("model/knn_model.pkl")
+    nb_model = joblib.load("model/naive_bayes_model.pkl")
+    rf_model = joblib.load("model/random_forest_model.pkl")
+    xgb_model = joblib.load("model/xgboost_model.pkl")
+except:
+    st.error("Model files not found! Upload .pkl files inside model/ folder.")
 
 # -------------------------------
-# (b) MODEL SELECTION DROPDOWN
+# Upload dataset
 # -------------------------------
-model_name = st.selectbox("Select Model", list(models.keys()))
-selected_model = models[model_name]
+uploaded_file = st.file_uploader("Upload heart dataset CSV", type=["csv"])
 
-# -------------------------------
-# PREDICTION USING CSV
-# -------------------------------
-if uploaded_file is not None:
-    data = pd.read_csv(uploaded_file)
-    st.write("Uploaded Dataset Preview", data.head())
+if uploaded_file:
+    df = pd.read_csv(uploaded_file)
+    st.write("Dataset Preview")
+    st.dataframe(df.head())
 
-    if st.button("Run Prediction on Dataset"):
-        X = data.drop("target", axis=1)
-        y = data["target"]
-
-        y_pred = selected_model.predict(X)
+    if "target" not in df.columns:
+        st.error("Dataset must contain 'target' column")
+    else:
+        X = df.drop("target", axis=1)
+        y = df["target"]
 
         # -------------------------------
-        # (c) EVALUATION METRICS
+        # Model selection dropdown
         # -------------------------------
-        st.subheader("Evaluation Metrics")
+        model_choice = st.selectbox(
+            "Select ML Model",
+            (
+                "Logistic Regression",
+                "Decision Tree",
+                "KNN",
+                "Naive Bayes",
+                "Random Forest",
+                "XGBoost"
+            )
+        )
 
-        acc = accuracy_score(y, y_pred)
-        precision = precision_score(y, y_pred)
-        recall = recall_score(y, y_pred)
-        f1 = f1_score(y, y_pred)
-
-        st.write("Accuracy:", acc)
-        st.write("Precision:", precision)
-        st.write("Recall:", recall)
-        st.write("F1 Score:", f1)
+        if model_choice == "Logistic Regression":
+            model = lr_model
+        elif model_choice == "Decision Tree":
+            model = dt_model
+        elif model_choice == "KNN":
+            model = knn_model
+        elif model_choice == "Naive Bayes":
+            model = nb_model
+        elif model_choice == "Random Forest":
+            model = rf_model
+        else:
+            model = xgb_model
 
         # -------------------------------
-        # (d) CONFUSION MATRIX
+        # Evaluate model
         # -------------------------------
-        st.subheader("Confusion Matrix")
-        cm = confusion_matrix(y, y_pred)
-        st.write(cm)
+        if st.button("Evaluate Model"):
+            predictions = model.predict(X)
 
-        st.subheader("Classification Report")
-        report = classification_report(y, y_pred)
-        st.text(report)
+            acc = accuracy_score(y, predictions)
+            cm = confusion_matrix(y, predictions)
 
-# -------------------------------
-# MANUAL INPUT SECTION
-# -------------------------------
-st.header("Manual Patient Input")
+            st.subheader("Model Accuracy")
+            st.write(acc)
 
-age = st.number_input("Age", 20, 100)
-sex = st.selectbox("Sex (1 = Male, 0 = Female)", [1, 0])
-cp = st.number_input("Chest Pain Type (0–3)", 0, 3)
-trestbps = st.number_input("Resting Blood Pressure", 80, 200)
-chol = st.number_input("Cholesterol", 100, 600)
-fbs = st.selectbox("Fasting Blood Sugar > 120", [1, 0])
-restecg = st.number_input("Resting ECG (0–2)", 0, 2)
-thalach = st.number_input("Max Heart Rate", 60, 220)
-exang = st.selectbox("Exercise Induced Angina", [1, 0])
-oldpeak = st.number_input("Oldpeak", 0.0, 10.0)
-slope = st.number_input("Slope", 0, 2)
-ca = st.number_input("Number of Major Vessels", 0, 4)
-thal = st.number_input("Thal (0–3)", 0, 3)
+            st.subheader("Confusion Matrix")
+            st.write(cm)
 
-input_data = pd.DataFrame({
-    'age': [age],
-    'sex': [sex],
-    'cp': [cp],
-    'trestbps': [trestbps],
-    'chol': [chol],
-    'fbs': [fbs],
-    'restecg': [restecg],
-    'thalach': [thalach],
-    'exang': [exang],
-    'oldpeak': [oldpeak],
-    'slope': [slope],
-    'ca': [ca],
-    'thal': [thal]
-})
+        # -------------------------------
+        # Prediction section
+        # -------------------------------
+        st.subheader("Make Prediction")
 
-if st.button("Predict (Manual Input)"):
-    pred = selected_model.predict(input_data)
+        input_data = []
+        for col in X.columns:
+            val = st.number_input(f"Enter {col}", value=0.0)
+            input_data.append(val)
 
-    st.subheader("Prediction Result")
-    st.success("Heart Disease Detected" if pred[0] == 1 else "No Heart Disease")
+        if st.button("Predict Heart Disease"):
+            input_df = pd.DataFrame([input_data], columns=X.columns)
+            pred = model.predict(input_df)[0]
+
+            if pred == 1:
+                st.error("⚠️ Person has Heart Disease")
+            else:
+                st.success("✅ Person is Normal")
