@@ -1,7 +1,21 @@
 import streamlit as st
 import pandas as pd
 import joblib
-from sklearn.metrics import accuracy_score, confusion_matrix
+import numpy as np
+
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+    matthews_corrcoef,
+    classification_report
+)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 st.title("❤️ Heart Disease Prediction ML App")
 
@@ -66,21 +80,48 @@ if uploaded_file:
         # Evaluate model
         # -------------------------------
         if st.button("Evaluate Model"):
+
             predictions = model.predict(X)
 
+            # Some models may not support predict_proba
+            try:
+                prob = model.predict_proba(X)[:,1]
+                auc = roc_auc_score(y, prob)
+            except:
+                auc = "Not available"
+
             acc = accuracy_score(y, predictions)
+            precision = precision_score(y, predictions)
+            recall = recall_score(y, predictions)
+            f1 = f1_score(y, predictions)
+            mcc = matthews_corrcoef(y, predictions)
             cm = confusion_matrix(y, predictions)
 
-            st.subheader("Model Accuracy")
-            st.write(acc)
+            # ---------------- Metrics Display ----------------
+            st.subheader("📊 Evaluation Metrics")
 
-            st.subheader("Confusion Matrix")
-            st.write(cm)
+            st.write("Accuracy:", acc)
+            st.write("AUC Score:", auc)
+            st.write("Precision:", precision)
+            st.write("Recall:", recall)
+            st.write("F1 Score:", f1)
+            st.write("MCC Score:", mcc)
+
+            # ---------------- Confusion Matrix ----------------
+            st.subheader("📉 Confusion Matrix")
+
+            fig, ax = plt.subplots()
+            sns.heatmap(cm, annot=True, fmt='d', cmap="Blues", ax=ax)
+            st.pyplot(fig)
+
+            # ---------------- Classification Report ----------------
+            st.subheader("📄 Classification Report")
+            st.text(classification_report(y, predictions))
 
         # -------------------------------
         # Prediction section
         # -------------------------------
-        st.subheader("Make Prediction")
+        st.subheader("🔍 Make Prediction")
 
         input_data = []
         for col in X.columns:
