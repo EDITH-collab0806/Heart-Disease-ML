@@ -71,17 +71,7 @@ It includes preprocessing, model training, evaluation, comparison, and deploymen
 
 - Select ML model  
 - View model accuracy & evaluation metrics  
-- Display confusion matrix  
-- Display classification report  
+- Display confusion matrix   
 - Predict heart disease risk for new patient data  
 
----
-
-## 📂 Project Structure
-
-├── app.py
-├── heart.csv
-├── models/
-├── requirements.txt
-└── README.md
 
