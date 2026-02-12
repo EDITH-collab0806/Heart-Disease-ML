@@ -79,3 +79,9 @@ It includes preprocessing, model training, evaluation, comparison, and deploymen
 
 ## 📂 Project Structure
 
+├── app.py
+├── heart.csv
+├── models/
+├── requirements.txt
+└── README.md
+
