@@ -76,14 +76,22 @@ F1 Score
 
 Matthews Correlation Coefficient (MCC)
 
-Model Performance Comparison Table
-ML Model Name	Accuracy	AUC	Precision	Recall	F1 Score	MCC
-Logistic Regression	0.8098	0.9298	0.7619	0.9143	0.8312	0.63
-Decision Tree	0.9854	0.9857	1.00	0.9714	0.9855	0.9711
-KNN	0.8634	0.9629	0.8738	0.8571	0.8654	0.7269
-Naive Bayes	0.8293	0.9043	0.8070	0.8762	0.8402	0.6602
-Random Forest	1.00	1.00	1.00	1.00	1.00	1.00
-XGBoost	1.00	1.00	1.00	1.00	1.00	1.00
+                 Model  Accuracy       AUC  Precision    Recall  F1 Score  \
+0  Logistic Regression  0.809756  0.929810   0.761905  0.914286  0.831169   
+1        Decision Tree  0.985366  0.985714   1.000000  0.971429  0.985507   
+2                  KNN  0.863415  0.962905   0.873786  0.857143  0.865385   
+3          Naive Bayes  0.829268  0.904286   0.807018  0.876190  0.840183   
+4        Random Forest  1.000000  1.000000   1.000000  1.000000  1.000000   
+5              XGBoost  1.000000  1.000000   1.000000  1.000000  1.000000   
+
+        MCC  
+0  0.630908  
+1  0.971151  
+2  0.726935  
+3  0.660163  
+4  1.000000  
+5  1.000000 
+
 Observations on Model Performance
 ML Model Name	Observation about model performance
 Logistic Regression	Performs well for linear relationships and gives good recall but slightly lower accuracy.
