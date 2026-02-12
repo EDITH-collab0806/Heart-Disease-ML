@@ -1,21 +1,21 @@
 import streamlit as st
 import pandas as pd
 import joblib
-import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from sklearn.metrics import (
     accuracy_score,
-    confusion_matrix,
     precision_score,
     recall_score,
     f1_score,
-    roc_auc_score,
     matthews_corrcoef,
+    roc_auc_score,
+    confusion_matrix,
     classification_report
 )
 
-import matplotlib.pyplot as plt
-import seaborn as sns
+st.set_page_config(page_title="Heart Disease ML App", layout="wide")
 
 st.title("❤️ Heart Disease Prediction ML App")
 
@@ -39,7 +39,7 @@ uploaded_file = st.file_uploader("Upload heart dataset CSV", type=["csv"])
 
 if uploaded_file:
     df = pd.read_csv(uploaded_file)
-    st.write("Dataset Preview")
+    st.subheader("Dataset Preview")
     st.dataframe(df.head())
 
     if "target" not in df.columns:
@@ -83,9 +83,9 @@ if uploaded_file:
 
             predictions = model.predict(X)
 
-            # Some models may not support predict_proba
+            # AUC calculation
             try:
-                prob = model.predict_proba(X)[:,1]
+                prob = model.predict_proba(X)[:, 1]
                 auc = roc_auc_score(y, prob)
             except:
                 auc = "Not available"
@@ -97,31 +97,39 @@ if uploaded_file:
             mcc = matthews_corrcoef(y, predictions)
             cm = confusion_matrix(y, predictions)
 
-            # ---------------- Metrics Display ----------------
-            st.subheader("📊 Evaluation Metrics")
+            # -------------------------------
+            # Metrics table
+            # -------------------------------
+            metrics_df = pd.DataFrame({
+                "Metric": ["Accuracy", "AUC", "Precision", "Recall", "F1 Score", "MCC"],
+                "Value": [acc, auc, precision, recall, f1, mcc]
+            })
 
-            st.write("Accuracy:", acc)
-            st.write("AUC Score:", auc)
-            st.write("Precision:", precision)
-            st.write("Recall:", recall)
-            st.write("F1 Score:", f1)
-            st.write("MCC Score:", mcc)
+            st.subheader("📊 Evaluation Metrics Table")
+            st.dataframe(metrics_df, use_container_width=True)
 
-            # ---------------- Confusion Matrix ----------------
+            # -------------------------------
+            # Confusion Matrix Heatmap
+            # -------------------------------
             st.subheader("📉 Confusion Matrix")
 
             fig, ax = plt.subplots()
             sns.heatmap(cm, annot=True, fmt='d', cmap="Blues", ax=ax)
             st.pyplot(fig)
 
-            # ---------------- Classification Report ----------------
-            st.subheader("📄 Classification Report")
-            st.text(classification_report(y, predictions))
+            # -------------------------------
+            # Classification Report table
+            # -------------------------------
+            report_dict = classification_report(y, predictions, output_dict=True)
+            report_df = pd.DataFrame(report_dict).transpose()
+
+            st.subheader("📄 Classification Report Table")
+            st.dataframe(report_df, use_container_width=True)
 
         # -------------------------------
         # Prediction section
         # -------------------------------
-        st.subheader("🔍 Make Prediction")
+        st.subheader("🔎 Make Prediction")
 
         input_data = []
         for col in X.columns:
